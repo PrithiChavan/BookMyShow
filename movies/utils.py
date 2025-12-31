@@ -2,7 +2,7 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import Seat
 
-RESERVATION_TIME = 5  # minutes
+RESERVATION_TIME = 5  
 
 def release_expired_seats():
     expiry_time = timezone.now() - timedelta(minutes=RESERVATION_TIME)

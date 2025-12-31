@@ -8,9 +8,9 @@ from .utils import release_expired_seats
 from django.utils import timezone
 
 
-# =========================
-# MOVIE LIST (SEARCH + FILTER)
-# =========================
+
+# MOVIE LIST 
+
 def movie_list(request):
     search_query = request.GET.get('search')
     genre_id = request.GET.get('genre')
@@ -36,17 +36,16 @@ def movie_list(request):
     return render(request, 'movies/movie_list.html', context)
 
 
-# =========================
-# MOVIE DETAIL (WITH TRAILER)
-# =========================
+
+# MOVIE DETAIL 
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     return render(request, 'movies/movie_detail.html', {'movie': movie})
 
 
-# =========================
+
 # THEATER LIST
-# =========================
+
 def theater_list(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     theaters = Theater.objects.filter(movie=movie)
@@ -56,9 +55,8 @@ def theater_list(request, movie_id):
     })
 
 
-# =========================
-# SEAT SELECTION (NO BOOKING HERE)
-# =========================
+
+# SEAT SELECTION 
 @login_required(login_url='/login/')
 def book_seats(request, theater_id):
     theater = get_object_or_404(Theater, id=theater_id)
@@ -105,9 +103,9 @@ def book_seats(request, theater_id):
 
 
 
-# =========================
+
 # MOCK PAYMENT PAGE
-# =========================
+
 @login_required(login_url='/login/')
 def payment_page(request, theater_id):
     selected_seats = request.session.get('selected_seats')
@@ -124,9 +122,8 @@ def payment_page(request, theater_id):
     })
 
 
-# =========================
-# PAYMENT SUCCESS (BOOK SEATS + EMAIL)
-# =========================
+
+# PAYMENT SUCCESS 
 @login_required
 def payment_success(request):
     selected_seats = request.session.get('selected_seats')
@@ -165,17 +162,17 @@ def payment_success(request):
 
     return redirect('booking_success')
 
-# =========================
+
 # PAYMENT FAILED
-# =========================
+
 @login_required(login_url='/login/')
 def payment_failed(request):
     return render(request, 'movies/payment_failed.html')
 
 
-# =========================
+
 # BOOKING SUCCESS PAGE
-# =========================
+
 @login_required(login_url='/login/')
 def booking_success(request):
     return render(request, 'movies/booking_success.html')

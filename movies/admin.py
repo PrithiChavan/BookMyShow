@@ -7,7 +7,7 @@ class MovieAdmin(admin.ModelAdmin):
     list_display = ['name', 'rating']
     list_filter = ['genres', 'languages']
     search_fields = ['name', 'cast']
-    filter_horizontal = ['genres', 'languages']  # ⭐ better UI
+    filter_horizontal = ['genres', 'languages']  
 
     fields = (
         'name',

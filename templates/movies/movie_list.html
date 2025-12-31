@@ -4,7 +4,7 @@
 <div class="container py-5">
     <h1 class="text-center mb-5">Movies</h1>
 
-    <!-- 🔍 SEARCH + FILTER BAR -->
+    <!--  SEARCH + FILTER BAR -->
     <div class="row justify-content-center mb-5">
         <div class="col-md-10">
             <form method="GET" action="{% url 'movie_list' %}">
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <!-- 🎬 MOVIES LIST -->
+    <!-- MOVIES LIST -->
     <div class="row" id="movieList">
         {% for movie in movies %}
         <div class="col-md-4 mb-4">
