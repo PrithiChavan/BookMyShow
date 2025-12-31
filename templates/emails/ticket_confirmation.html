@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Confirmation</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+
+    <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 6px;">
+        <h2 style="color: #e50914; text-align: center;">🎟️ Booking Confirmed</h2>
+
+        <p>Hello <strong>{{ user.username }}</strong>,</p>
+
+        <p>Your movie ticket booking has been <strong>successfully confirmed</strong>.</p>
+
+        <hr>
+
+        <h3>🎬 Booking Details</h3>
+        <table cellpadding="8">
+            <tr>
+                <td><strong>Movie:</strong></td>
+                <td>{{ movie.name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Theater:</strong></td>
+                <td>{{ theater.name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Seats:</strong></td>
+                <td>{{ seats }}</td>
+            </tr>
+            <tr>
+                <td><strong>Show Time:</strong></td>
+                <td>{{ theater.time }}</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <p style="text-align:center;">
+             Enjoy your movie experience! <br>
+            Thank you for booking with us.
+        </p>
+
+        <p style="font-size: 12px; color: #777; text-align: center;">
+            This is an automated email. Please do not reply.
+        </p>
+    </div>
+
+</body>
+</html>

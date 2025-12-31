@@ -1,0 +1,119 @@
+{% extends "users/basic.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Movies</h1>
+
+    <!-- 🔍 SEARCH + FILTER BAR -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-10">
+            <form method="GET" action="{% url 'movie_list' %}">
+                <div class="row g-2">
+
+                    <!-- Search -->
+                    <div class="col-md-5">
+                        <input
+                            class="form-control form-control-lg"
+                            name="search"
+                            placeholder="Search movies"
+                            type="text"
+                            value="{{ search_query|default_if_none:'' }}"
+                        />
+                    </div>
+
+                    <!-- Genre Filter -->
+                    <div class="col-md-3">
+                        <select name="genre" class="form-control form-control-lg">
+                            <option value="">All Genres</option>
+                            {% for genre in genres %}
+                                <option value="{{ genre.id }}"
+                                    {% if request.GET.genre == genre.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ genre.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Language Filter -->
+                    <div class="col-md-3">
+                        <select name="language" class="form-control form-control-lg">
+                            <option value="">All Languages</option>
+                            {% for language in languages %}
+                                <option value="{{ language.id }}"
+                                    {% if request.GET.language == language.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ language.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="col-md-1 d-grid">
+                        <button class="btn btn-primary btn-lg" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🎬 MOVIES LIST -->
+    <div class="row" id="movieList">
+        {% for movie in movies %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ movie.image.url }}" class="card-img-top"
+                     alt="{{ movie.name }}"
+                     style="height: 300px; object-fit: cover;">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.name }}</h5>
+
+                    <p class="card-text">
+                        <i class="fas fa-star text-warning"></i>
+                        {{ movie.rating }}
+                    </p>
+
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="fas fa-users"></i>
+                            Cast: {{ movie.cast }}
+                        </small>
+                    </p>
+                </div>
+
+                <div class="card-footer bg-white border-top-0">
+                    <a href="{% url 'movie_detail' movie.id %}" class="btn btn-outline-primary btn-block">
+                        View Details
+                    </a>
+
+                        <i class="fas fa-chevron-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="lead">No movies found.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<style>
+    .card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    }
+</style>
+{% endblock %}

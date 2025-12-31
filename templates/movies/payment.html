@@ -1,0 +1,16 @@
+{% extends "users/basic.html" %}
+{% block content %}
+
+<div class="container text-center mt-5">
+  <h2>Payment</h2>
+  <p>Total Amount: <strong>₹{{ amount }}</strong></p>
+
+  <a href="{% url 'payment_success' %}" class="btn btn-success btn-lg">
+    Pay Now
+  </a>
+  <a href="{% url 'payment_failed' %}" class="btn btn-danger btn-lg ms-3">
+    Cancel
+  </a>
+</div>
+
+{% endblock %}

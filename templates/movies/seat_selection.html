@@ -1,0 +1,133 @@
+{% extends "users/basic.html" %}
+{% block content %}
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+
+      <!-- Movie & Theater Info -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+              <h4 class="card-title">{{ theaters.movie.name }}</h4>
+              <p class="card-text text-muted">
+                {{ theaters.name }} | {{ theaters.time }}
+              </p>
+            </div>
+            <div class="mt-2 mt-sm-0">
+              <button class="btn btn-outline-primary me-2" disabled>2D</button>
+              <button class="btn btn-outline-primary me-2" disabled>3D</button>
+              <button class="btn btn-outline-primary me-2" disabled>IMAX 3D</button>
+              <button class="btn btn-outline-primary" disabled>
+                {{ seats|length }} Seats
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seat Selection -->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center mb-4">Select Your Seats</h5>
+
+          <div class="screen">All eyes this way please!</div>
+
+          <!--BOOKING FORM -->
+          <form method="POST" action="{% url 'book_seats' theaters.id %}">
+            {% csrf_token %}
+
+            <!-- Seats -->
+            <div class="seat-container">
+              {% for seat in seats %}
+                <input
+                  type="checkbox"
+                  name="seats"
+                  id="seat-{{ seat.id }}"
+                  value="{{ seat.id }}"
+                  {% if seat.is_booked %}disabled{% endif %}
+                >
+                <label
+                  for="seat-{{ seat.id }}"
+                  class="seat {% if seat.is_booked %}sold{% elif seat.is_reserved %}reserved{% endif %}">
+                  {{ seat.seat_number }}
+                </label>
+              {% endfor %}
+            </div>
+
+            <!-- Submit -->
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-success btn-lg">
+                Book Selected Seats
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ✅ STYLES -->
+<style>
+/* Seat layout */
+.seat-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Hide checkbox */
+.seat-container input {
+  display: none;
+}
+
+/* Seat box */
+.seat {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #28a745;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  user-select: none;
+}
+
+/* Selected seat */
+.seat-container input:checked + .seat {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Sold seat */
+.seat.sold {
+  background-color: #ccc;
+  border-color: #999;
+  cursor: not-allowed;
+}
+
+/* Screen */
+.screen {
+  margin: 20px 0;
+  background-color: #ccc;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  color: #666;
+  border-radius: 4px;
+}
+.reserved {
+  background-color: orange;
+  border-color: orange;
+  cursor: not-allowed;
+}
+</style>
+
+{% endblock %}
